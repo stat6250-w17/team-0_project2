@@ -96,3 +96,74 @@ and setting all cell values to "Text" format
 
 [Unique ID Schema] The column CDS is a unique id.
 ;
+
+* setup environmental parameters;
+%let inputDataset1URL =
+https://github.com/stat6250/team-0_project2/blob/master/data/frpm1415-edited.xls?raw=true
+;
+%let inputDataset1Type = XLS;
+%let inputDataset1DSN = frpm1415_raw;
+
+%let inputDataset2URL =
+https://github.com/stat6250/team-0_project2/blob/master/data/frpm1516-edited.xls?raw=true
+;
+%let inputDataset2Type = XLS;
+%let inputDataset2DSN = frpm1516_raw;
+
+%let inputDataset3URL =
+https://github.com/stat6250/team-0_project2/blob/master/data/gradaf15.xls?raw=true
+;
+%let inputDataset3Type = XLS;
+%let inputDataset3DSN = gradaf15_raw;
+
+%let inputDataset4URL =
+https://github.com/stat6250/team-0_project2/blob/master/data/sat15-edited.xls?raw=true
+;
+%let inputDataset4Type = XLS;
+%let inputDataset4DSN = sat15_raw;
+
+
+* load raw datasets over the wire, if they doesn't already exist;
+%macro loadDataIfNotAlreadyAvailable(dsn,url,filetype);
+    %put &=dsn;
+    %put &=url;
+    %put &=filetype;
+    %if
+        %sysfunc(exist(&dsn.)) = 0
+    %then
+        %do;
+            filename tempfile TEMP;
+            proc http
+                method="get"
+                url="&url."
+                out=tempfile
+                ;
+            run;
+            proc import
+                file=tempfile
+                out=&dsn.
+                dbms=&filetype.;
+            run;
+            filename tempfile clear;
+        %end;
+%mend;
+%loadDataIfNotAlreadyAvailable(
+    &inputDataset1DSN.,
+    &inputDataset1URL.,
+    &inputDataset1Type.
+)
+%loadDataIfNotAlreadyAvailable(
+    &inputDataset2DSN.,
+    &inputDataset2URL.,
+    &inputDataset2Type.
+)
+%loadDataIfNotAlreadyAvailable(
+    &inputDataset3DSN.,
+    &inputDataset3URL.,
+    &inputDataset3Type.
+)
+%loadDataIfNotAlreadyAvailable(
+    &inputDataset4DSN.,
+    &inputDataset4URL.,
+    &inputDataset4Type.
+)

@@ -132,6 +132,7 @@ https://github.com/stat6250/team-0_project2/blob/master/data/sat15-edited.xls?ra
         %sysfunc(exist(&dsn.)) = 0
     %then
         %do;
+            %put Loading dataset &dsn. over the wire now...;
             filename tempfile TEMP;
             proc http
                 method="get"
@@ -145,6 +146,10 @@ https://github.com/stat6250/team-0_project2/blob/master/data/sat15-edited.xls?ra
                 dbms=&filetype.;
             run;
             filename tempfile clear;
+        %end;
+    %else
+        %do;
+            %put Dataset &dsn. already exists. Please delete and try again.;
         %end;
 %mend;
 %loadDataIfNotAlreadyAvailable(

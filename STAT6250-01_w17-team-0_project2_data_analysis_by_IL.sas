@@ -44,16 +44,21 @@ directory, if using Windows;
 * Research Question Analysis Starting Point;
 *******************************************************************************;
 *
-Question: What are the top five districts that experienced the biggest increase
+Question: What are the top five schools that experienced the biggest increase
 in "Percent (%) Eligible Free (K-12)" between AY2014-15 and AY2015-16?
 
-Rationale: This should help identify school districts to consider for new
-outreach based upon increasing child-poverty levels.
+Rationale: This should help identify schoos to consider for new outreach based
+upon increasing child-poverty levels.
 
 Note: This compares the column "Percent (%) Eligible Free (K-12)" from frpm1415
 to the column of the same name from frpm1516.
 
-Methodology: TBD
+Methodology: When combining frpm1415 with frpm1516 during data preparation,
+take the difference of values of "Percent (%) Eligible Free (K-12)" for each
+school and create a new variable called frpm_rate_change_2014_to_2015. Here,
+use proc sort to create a temporary sorted table in descending by
+frpm_rate_change_2014_to_2015 and then proc print to display the first five
+rows of the sorted dataset.
 ;
 
 
@@ -72,7 +77,10 @@ schools most in need of college-preparation outreach.
 Note: This compares the column "Percent (%) Eligible Free (K-12)" from frpm1415
 to the column PCTGE1500 from sat15.
 
-Methodology: TBD
+Methodology: Use proc means to compute 5-number summaries of "Percent (%)
+Eligible Free (K-12)" and PCTGE1500. Then use proc format to create formats
+that bin both columns with respect to the proc means output. Then use proc freq
+to create a cross-tab of the two variables with respect to the created formats.
 ;
 
 
@@ -92,5 +100,9 @@ impact.
 Note: This compares the column NUMTSTTAKR from sat15 to the column TOTAL from
 gradaf15.
 
-Methodology: TBD
+Methodology: When combining sat15 and gradaf15 during data preparation, take the
+difference between NUMTSTTAKR and gradaf15 for each school and create a new
+variable called excess_sat_takers. Here, use proc sort to create a temporary
+sorted table in descending by excess_sat_takers and then proc print to display
+the first 10 rows of the sorted dataset.
 ;

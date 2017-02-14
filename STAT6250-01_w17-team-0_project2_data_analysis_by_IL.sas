@@ -7,7 +7,7 @@
 This file uses the following analytic dataset to address several research
 questions regarding college-preparation trends at CA public K-12 schools
 
-Dataset Name: cde_2014_and_2015_analytic_file created in external file
+Dataset Name: cde_2014_analytic_file created in external file
 STAT6250-01_w17-team-0_project2_data_preparation.sas, which is assumed to be
 in the same directory as this file
 
@@ -19,7 +19,7 @@ See included file for dataset properties
 %let sasUEFilePrefix = team-0_project2;
 
 * load external file that generates analytic dataset
-cde_2014_and_2015_analytic_file using a system path dependent on the host
+cde_2014_analytic_file using a system path dependent on the host
 operating system, after setting the relative file import path to the current
 directory, if using Windows;
 %macro setup;
@@ -61,6 +61,18 @@ frpm_rate_change_2014_to_2015 and then proc print to display the first five
 rows of the sorted dataset.
 ;
 
+proc sort
+        data=cde_2014_analytic_file
+        out=cde_2014_analytic_file_sorted
+    ;
+    by descending frpm_rate_change_2014_to_2015;
+run;
+
+proc print data=cde_2014_analytic_file_sorted(obs=5);
+    id School_Name;
+    var frpm_rate_change_2014_to_2015;
+run;
+
 
 *******************************************************************************;
 * Research Question Analysis Starting Point;
@@ -83,6 +95,37 @@ that bin both columns with respect to the proc means output. Then use proc freq
 to create a cross-tab of the two variables with respect to the created formats.
 ;
 
+proc means min q1 median q3 max data=cde_2014_analytic_file;
+    var
+        Percent_Eligible_FRPM_K12
+        PCTGE1500
+    ;
+run;
+proc format;
+    value Percent_Eligible_FRPM_K12_bins
+        [to be filled in after analysis file is created]="Q1 FRPM"
+        [to be filled in after analysis file is created]="Q2 FRPM"
+        [to be filled in after analysis file is created]="Q3 FRPM"
+        [to be filled in after analysis file is created]="Q4 FRPM"
+    ;
+    value PCTGE1500_bins
+        [to be filled in after analysis file is created]="Q1 SAT_Scores_GE_1500"
+        [to be filled in after analysis file is created]="Q2 SAT_Scores_GE_1500"
+        [to be filled in after analysis file is created]="Q3 SAT_Scores_GE_1500"
+        [to be filled in after analysis file is created]="Q4 SAT_Scores_GE_1500"
+    ;
+run;
+proc freq data=cde_2014_analytic_file;
+    table
+             Percent_Eligible_FRPM_K12
+            *PCTGE1500
+            / missing norow nocol nopercent
+    ;
+    format
+        Percent_Eligible_FRPM_K12 Percent_Eligible_FRPM_K12_bins.
+        PCTGE1500 PCTGE1500_bins.
+    ;
+run;
 
 *******************************************************************************;
 * Research Question Analysis Starting Point;
@@ -106,3 +149,15 @@ variable called excess_sat_takers. Here, use proc sort to create a temporary
 sorted table in descending by excess_sat_takers and then proc print to display
 the first 10 rows of the sorted dataset.
 ;
+
+proc sort
+        data=cde_2014_analytic_file
+        out=cde_2014_analytic_file_sorted
+    ;
+    by descending excess_sat_takers;
+run;
+
+proc print data=cde_2014_analytic_file_sorted(obs=10);
+    id School_Name;
+    var excess_sat_takers;
+run;

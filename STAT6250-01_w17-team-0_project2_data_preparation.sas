@@ -15,7 +15,11 @@ AY2014-15
                     
 [Number of Features] 28
 
-[Data Source] http://www.cde.ca.gov/ds/sd/sd/documents/frpm1415.xls
+[Data Source] The file http://www.cde.ca.gov/ds/sd/sd/documents/frpm1415.xls
+was downloaded and edited to produce file frpm1415-edited.xls by deleting
+worksheet "Title Page", deleting row 1 from worksheet "FRPM School-Level Data",
+reformatting column headers in "FRPM School-Level Data" to remove characters
+disallowed in SAS variable names, and setting all cell values to "Text" format
 
 [Data Dictionary] http://www.cde.ca.gov/ds/sd/sd/fsspfrpm.asp
 
@@ -37,7 +41,11 @@ AY2015-16
                     
 [Number of Features] 28
 
-[Data Source] http://www.cde.ca.gov/ds/sd/sd/documents/frpm1516.xls
+[Data Source] The file http://www.cde.ca.gov/ds/sd/sd/documents/frpm1516.xls
+was downloaded and edited to produce file frpm1516-edited.xls by deleting
+worksheet "Title Page", deleting row 1 from worksheet "FRPM School-Level Data",
+reformatting column headers in "FRPM School-Level Data" to remove characters
+disallowed in SAS variable names, and setting all cell values to "Text" format
 
 [Data Dictionary] http://www.cde.ca.gov/ds/sd/sd/fsspfrpm.asp
 
@@ -58,8 +66,11 @@ the unique id column CDS in dataset sat15.
                     
 [Number of Features] 15
 
-[Data Source]
+[Data Source] The file
 http://dq.cde.ca.gov/dataquest/dlfile/dlfile.aspx?cLevel=School&cYear=2014-15&cCat=UCGradEth&cPage=filesgradaf.asp
+was downloaded and edited to produce file gradaf15.xls by importing into Excel
+and setting all cell values to "Text" format
+
 
 [Data Dictionary] http://www.cde.ca.gov/ds/sd/sd/fsgradaf09.asp
 
@@ -77,7 +88,9 @@ http://dq.cde.ca.gov/dataquest/dlfile/dlfile.aspx?cLevel=School&cYear=2014-15&cC
                     
 [Number of Features] 12
 
-[Data Source] http://www3.cde.ca.gov/researchfiles/satactap/sat15.xls
+[Data Source]  The file http://www3.cde.ca.gov/researchfiles/satactap/sat15.xls
+was downloaded and edited to produce file sat15-edited.xls by opening in Excel
+and setting all cell values to "Text" format
 
 [Data Dictionary] http://www.cde.ca.gov/ds/sp/ai/reclayoutsat.asp
 

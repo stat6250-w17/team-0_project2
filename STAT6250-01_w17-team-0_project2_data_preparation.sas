@@ -172,3 +172,51 @@ https://github.com/stat6250/team-0_project2/blob/master/data/sat15-edited.xls?ra
     &inputDataset4URL.,
     &inputDataset4Type.
 )
+
+
+* sort and check raw datasets for duplicates with respect to their unique ids,
+  removing blank rows, if needed;
+proc sort
+        nodupkey
+        data=frpm1415_raw
+        dupout=frpm1415_raw_dups
+        out=frpm1415_raw_sorted(where=(not(missing(School_Code))))
+    ;
+    by
+        County_Code
+        District_Code
+        School_Code
+    ;
+run;
+proc sort
+        nodupkey
+        data=frpm1516_raw
+        dupout=frpm1516_raw_dups
+        out=frpm1516_raw_sorted
+    ;
+    by
+        County_Code
+        District_Code
+        School_Code
+    ;
+run;
+proc sort
+        nodupkey
+        data=gradaf15_raw
+        dupout=gradaf15_raw_dups
+        out=gradaf15_raw_sorted
+    ;
+    by
+        CDS_CODE
+    ;
+run;
+proc sort
+        nodupkey
+        data=sat15_raw
+        dupout=sat15_raw_dups
+        out=sat15_raw_sorted
+    ;
+    by
+        CDS
+    ;
+run;

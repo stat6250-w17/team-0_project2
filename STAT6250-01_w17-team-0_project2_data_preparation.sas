@@ -220,3 +220,38 @@ proc sort
         CDS
     ;
 run;
+
+
+* combine FRPM data vertically and compute year-over-year change in
+  Percent_Eligible_FRPM_K12, retaining only AY2014-15 data and y-o-y change;
+data frpm1415_raw_with_yoy_change;
+    set
+        frpm1516_raw_sorted(in=ay2015_data_row)
+        frpm1415_raw_sorted(in=ay2014_data_row)
+    ;
+    retain
+        Percent_Eligible_FRPM_K12_1516
+    ;
+    by
+        County_Code
+        District_Code
+        School_Code
+    ;
+    if
+        ay2015_data_row=1
+    then
+        do;
+            Percent_Eligible_FRPM_K12_1516 = Percent_Eligible_FRPM_K12;
+        end;
+    else if
+        ay2014_data_row=1
+    then
+        do;
+            frpm_rate_change_2014_to_2015 =
+                Percent_Eligible_FRPM_K12
+                -
+                Percent_Eligible_FRPM_K12_1516
+            ;
+            output;
+        end;
+run;

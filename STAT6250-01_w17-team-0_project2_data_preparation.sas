@@ -222,9 +222,16 @@ proc sort
 run;
 
 
-* combine FRPM data vertically and compute year-over-year change in
-  Percent_Eligible_FRPM_K12, retaining only AY2014-15 data and y-o-y change;
+* combine FRPM data vertically, combine composite key values into a primary key
+  key, and compute year-over-year change in Percent_Eligible_FRPM_K12,
+  retaining all AY2014-15 fields and y-o-y Percent_Eligible_FRPM_K12 change;
 data frpm1415_raw_with_yoy_change;
+    retain
+        CDS_Code
+    ;
+    length
+        CDS_Code $14.
+    ;
     set
         frpm1516_raw_sorted(in=ay2015_data_row)
         frpm1415_raw_sorted(in=ay2014_data_row)
@@ -245,8 +252,13 @@ data frpm1415_raw_with_yoy_change;
         end;
     else if
         ay2014_data_row=1
+        and
+        Percent_Eligible_FRPM_K12 > 0
+        and
+        substr(School_Code,1,6) ne "000000"
     then
         do;
+            CDS_Code = cats(County_Code,District_Code,School_Code);
             frpm_rate_change_2014_to_2015 =
                 Percent_Eligible_FRPM_K12
                 -
@@ -254,4 +266,53 @@ data frpm1415_raw_with_yoy_change;
             ;
             output;
         end;
+run;
+
+
+* build analytic dataset from raw datasets with the least number of columns and
+minimal cleaning/transformation needed to address research questions in
+corresponding data-analysis files;
+data cde_2014_analytic_file;
+    retain
+        CDS_Code
+        School_Name
+        Percent_Eligible_FRPM_K12
+        frpm_rate_change_2014_to_2015
+        PCTGE1500
+        excess_sat_takers
+    ;
+    keep
+        CDS_Code
+        School_Name
+        Percent_Eligible_FRPM_K12
+        frpm_rate_change_2014_to_2015
+        PCTGE1500
+        excess_sat_takers
+    ;
+    merge
+        frpm1415_raw_with_yoy_change
+        gradaf15_raw
+        sat15_raw(rename=(CDS=CDS_Code PCTGE1500=PCTGE1500_character))
+    ;
+    by
+        CDS_Code
+    ;
+    if
+        not(missing(compress(PCTGE1500_character,'.','kd')))
+    then
+        do;
+            PCTGE1500 = input(PCTGE1500_character,best12.2);
+        end;
+    else
+        do;
+            call missing(PCTGE1500);
+        end;
+    excess_sat_takers = input(NUMTSTTAKR,best12.) - input(TOTAL,best12.);
+    if
+        not(missing(CDS_Code))
+        and
+        not(missing(School_Name))
+        and
+        not(missing(School_Name))
+    ;
 run;

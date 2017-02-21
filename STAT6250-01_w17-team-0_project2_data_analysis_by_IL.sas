@@ -94,6 +94,14 @@ title2
 "Rationale: This would help inform whether child-poverty levels are associated with college-preparedness rates, providing a strong indicator for the types of schools most in need of college-preparation outreach."
 ;
 
+footnote1
+"As can be seen, there was an extremely high correlation between student poverty and SAT scores in AY2014-15, with lower-poverty schools much more likely to have high proportions of students with combined SAT scores exceeding 1500."
+;
+
+footnote2
+"Possible explanations for this correlation include child-poverty rates tending to be higher at schools with lower overall academic performance and quality of instruction. In addition, students in non-poverish conditions are more likely to have parents able to pay for SAT preparation."
+;
+
 *
 Note: This compares the column "Percent (%) Eligible Free (K-12)" from frpm1415
 to the column PCTGE1500 from sat15.
@@ -104,17 +112,11 @@ that bin both columns with respect to the proc means output. Then use proc freq
 to create a cross-tab of the two variables with respect to the created formats.
 ;
 
-proc means min q1 median q3 max data=cde_2014_analytic_file;
-    var
-        Percent_Eligible_FRPM_K12
-        PCTGE1500
-    ;
-run;
 proc freq data=cde_2014_analytic_file;
     table
              Percent_Eligible_FRPM_K12
             *PCTGE1500
-            / missing norow nocol nopercent
+            / missing nocol nopercent
     ;
     where
         not(missing(PCTGE1500))
@@ -122,6 +124,10 @@ proc freq data=cde_2014_analytic_file;
     format
         Percent_Eligible_FRPM_K12 Percent_Eligible_FRPM_K12_bins.
         PCTGE1500 PCTGE1500_bins.
+    ;
+    label
+        Percent_Eligible_FRPM_K12="Percent Eligible for free/reduced-price meals"
+        PCTGE1500="Percent with combined SAT scores exceeding 1500"
     ;
 run;
 

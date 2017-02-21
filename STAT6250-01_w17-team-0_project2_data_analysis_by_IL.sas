@@ -73,15 +73,16 @@ run;
 *******************************************************************************;
 * Research Question Analysis Starting Point;
 *******************************************************************************;
+
+title1
+"Research Question: Can free/reduced-price meals (FRPM) eligibility rate be used to predict the proportion of high school graduates earning a combined score of at least 1500 on the SAT?"
+;
+
+title2
+"Rationale: This would help inform whether child-poverty levels are associated with college-preparedness rates, providing a strong indicator for the types of schools most in need of college-preparation outreach."
+;
+
 *
-Question: Can "Percent (%) Eligible FRPM (K-12)" be used to predict the
-proportion of high school graduates earning a combined score of at least 1500
-on the SAT?
-
-Rationale: This would help inform whether child-poverty levels are associated
-with college-preparedness rates, providing a strong indicator for the types of
-schools most in need of college-preparation outreach.
-
 Note: This compares the column "Percent (%) Eligible Free (K-12)" from frpm1415
 to the column PCTGE1500 from sat15.
 

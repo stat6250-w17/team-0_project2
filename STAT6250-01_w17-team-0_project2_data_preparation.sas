@@ -239,7 +239,7 @@ run;
 
 
 * combine FRPM data vertically, combine composite key values into a primary key
-  key, and compute year-over-year change in Percent_Eligible_FRPM_K12,
+  key, and compute year-over-year (y-o-y) change in Percent_Eligible_FRPM_K12,
   retaining all AY2014-15 fields and y-o-y Percent_Eligible_FRPM_K12 change;
 data frpm1415_raw_with_yoy_change;
     retain
@@ -333,7 +333,9 @@ data cde_2014_analytic_file;
     ;
 run;
 
-* create copy of analytic file sorted by frpm_rate_change_2014_to_2015;
+
+* create copy of analytic file sorted by frpm_rate_change_2014_to_2015 for use
+in data analysis;
 proc sort
         data=cde_2014_analytic_file
         out=cde_2014_analytic_file_frpm_sort
@@ -341,7 +343,9 @@ proc sort
     by descending frpm_rate_change_2014_to_2015;
 run;
 
-* create copy of analytic file sorted by excess_sat_takers;
+
+* create copy of analytic file sorted by excess_sat_takers for use in data
+analysis;
 proc sort
         data=cde_2014_analytic_file
         out=cde_2014_analytic_sat_sort

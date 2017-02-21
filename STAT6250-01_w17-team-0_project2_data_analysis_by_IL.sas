@@ -52,6 +52,18 @@ title2
 "Rationale: This should help identify schoos to consider for new outreach based upon increasing child-poverty levels."
 ;
 
+footnote1
+"All five schools listed appear to have experienced extremely large increases percent eligible for free/reduced-price meals between AY2014-15 and AY2015-16."
+;
+
+footnote2
+"Given the magnitude of these changes, further investigation should be performed to ensure no data errors are involved, especially for the school apparently exhibiting an increase of 100%."
+;
+
+footnote3
+"However, assuming there are no data issues underlying this analysis, possible explanations for such large increases include changing CA demographics and recent loosening of the rules under which students qualify for free/reduced-price meals."
+;
+
 *
 Note: This compares the column "Percent (%) Eligible Free (K-12)" from frpm1415
 to the column of the same name from frpm1516.
@@ -82,6 +94,14 @@ title2
 "Rationale: This would help inform whether child-poverty levels are associated with college-preparedness rates, providing a strong indicator for the types of schools most in need of college-preparation outreach."
 ;
 
+footnote1
+"As can be seen, there was an extremely high correlation between student poverty and SAT scores in AY2014-15, with lower-poverty schools much more likely to have high proportions of students with combined SAT scores exceeding 1500."
+;
+
+footnote2
+"Possible explanations for this correlation include child-poverty rates tending to be higher at schools with lower overall academic performance and quality of instruction. In addition, students in non-poverish conditions are more likely to have parents able to pay for SAT preparation."
+;
+
 *
 Note: This compares the column "Percent (%) Eligible Free (K-12)" from frpm1415
 to the column PCTGE1500 from sat15.
@@ -92,17 +112,11 @@ that bin both columns with respect to the proc means output. Then use proc freq
 to create a cross-tab of the two variables with respect to the created formats.
 ;
 
-proc means min q1 median q3 max data=cde_2014_analytic_file;
-    var
-        Percent_Eligible_FRPM_K12
-        PCTGE1500
-    ;
-run;
 proc freq data=cde_2014_analytic_file;
     table
              Percent_Eligible_FRPM_K12
             *PCTGE1500
-            / missing norow nocol nopercent
+            / missing nocol nopercent
     ;
     where
         not(missing(PCTGE1500))
@@ -110,6 +124,10 @@ proc freq data=cde_2014_analytic_file;
     format
         Percent_Eligible_FRPM_K12 Percent_Eligible_FRPM_K12_bins.
         PCTGE1500 PCTGE1500_bins.
+    ;
+    label
+        Percent_Eligible_FRPM_K12="Percent Eligible for free/reduced-price meals"
+        PCTGE1500="Percent with combined SAT scores exceeding 1500"
     ;
 run;
 
@@ -123,6 +141,18 @@ title1
 
 title2
 "Rationale: This would help identify schools with significant gaps in preparation specific for California's two public university systems, suggesting where focused outreach on UC/CSU college-preparation might have the greatest impact."
+;
+
+footnote1
+"All ten schools listed appear to have extremely large numbers of 12th-graders graduating who have completed the SAT but not the coursework needed to apply for the UC/CSU system"
+;
+
+footnote2
+"Given the magnitude of these numbers, further investigation should be performed to ensure no data errors are involved."
+;
+
+footnote3
+"However, assuming there are no data issues underlying this analysis, possible explanations for such large numbers of 12th-graders completing only the SAT include lack of access to UC/CSU-preparatory coursework, as well as lack of proper counseling for students early enough in high school to complete all necessary coursework."
 ;
 
 *

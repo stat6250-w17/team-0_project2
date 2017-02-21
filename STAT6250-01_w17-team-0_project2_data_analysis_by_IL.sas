@@ -43,13 +43,16 @@ directory, if using Windows;
 *******************************************************************************;
 * Research Question Analysis Starting Point;
 *******************************************************************************;
+
+title1
+"Research Question: What are the top five schools experiencing the biggest increase in percent eligible for free/reduced-price meals between AY2014-15 and AY2015-16?"
+;
+
+title2
+"Rationale: This should help identify schoos to consider for new outreach based upon increasing child-poverty levels."
+;
+
 *
-Question: What are the top five schools that experienced the biggest increase
-in "Percent (%) Eligible Free (K-12)" between AY2014-15 and AY2015-16?
-
-Rationale: This should help identify schoos to consider for new outreach based
-upon increasing child-poverty levels.
-
 Note: This compares the column "Percent (%) Eligible Free (K-12)" from frpm1415
 to the column of the same name from frpm1516.
 

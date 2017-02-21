@@ -332,3 +332,19 @@ data cde_2014_analytic_file;
         not(missing(School_Name))
     ;
 run;
+
+* create copy of analytic file sorted by frpm_rate_change_2014_to_2015;
+proc sort
+        data=cde_2014_analytic_file
+        out=cde_2014_analytic_file_frpm_sort
+    ;
+    by descending frpm_rate_change_2014_to_2015;
+run;
+
+* create copy of analytic file sorted by excess_sat_takers;
+proc sort
+        data=cde_2014_analytic_file
+        out=cde_2014_analytic_sat_sort
+    ;
+    by descending excess_sat_takers;
+run;

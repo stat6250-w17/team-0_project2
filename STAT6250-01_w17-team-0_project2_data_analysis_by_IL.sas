@@ -61,14 +61,7 @@ frpm_rate_change_2014_to_2015 and then proc print to display the first five
 rows of the sorted dataset.
 ;
 
-proc sort
-        data=cde_2014_analytic_file
-        out=cde_2014_analytic_file_sorted
-    ;
-    by descending frpm_rate_change_2014_to_2015;
-run;
-
-proc print data=cde_2014_analytic_file_sorted(obs=5);
+proc print data=cde_2014_analytic_file_frpm_sort(obs=5);
     id School_Name;
     var frpm_rate_change_2014_to_2015;
 run;
@@ -139,14 +132,7 @@ to create a temporary sorted table in descending by excess_sat_takers and then
 proc print to display the first 10 rows of the sorted dataset.
 ;
 
-proc sort
-        data=cde_2014_analytic_file
-        out=cde_2014_analytic_file_sorted
-    ;
-    by descending excess_sat_takers;
-run;
-
-proc print data=cde_2014_analytic_file_sorted(obs=10);
+proc print data=cde_2014_analytic_sat_sort(obs=10);
     id School_Name;
     var excess_sat_takers;
 run;

@@ -52,6 +52,18 @@ title2
 "Rationale: This should help identify schoos to consider for new outreach based upon increasing child-poverty levels."
 ;
 
+footnote1
+"All five schools listed appear to have experienced extremely large increases percent eligible for free/reduced-price meals between AY2014-15 and AY2015-16."
+;
+
+footnote2
+"Given the magnitude of these changes, further investigation should be performed to ensure no data errors are involved, especially for the school apparently exhibiting an increase of 100%."
+;
+
+footnote3
+"However, assuming there are no data issues underlying this analysis, possible explanations for such large increases include changing CA demographics and recent loosening of the rules under which students qualify for free/reduced-price meals."
+;
+
 *
 Note: This compares the column "Percent (%) Eligible Free (K-12)" from frpm1415
 to the column of the same name from frpm1516.

@@ -116,16 +116,16 @@ run;
 *******************************************************************************;
 * Research Question Analysis Starting Point;
 *******************************************************************************;
+
+title1
+"Research Question: What are the top ten schools were the number of high school graduates taking the SAT exceeds the number of high school graduates completing UC/CSU entrance requirements?"
+;
+
+title2
+"Rationale: This would help identify schools with significant gaps in preparation specific for California's two public university systems, suggesting where focused outreach on UC/CSU college-preparation might have the greatest impact."
+;
+
 *
-Question: What are the top ten schools were the number of high school graduates
-taking the SAT exceeds the number of high school graduates completing UC/CSU
-entrance requirements?
-
-Rationale: This would help identify schools with significant gaps in
-preparation specific for California's two public university systems, suggesting
-where focused outreach on UC/CSU college-preparation might have the greatest
-impact.
-
 Note: This compares the column NUMTSTTAKR from sat15 to the column TOTAL from
 gradaf15.
 

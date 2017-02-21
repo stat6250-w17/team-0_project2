@@ -18,10 +18,9 @@ See included file for dataset properties
 %let dataPrepFileName = STAT6250-01_w17-team-0_project2_data_preparation.sas;
 %let sasUEFilePrefix = team-0_project2;
 
-* load external file that generates analytic dataset
-cde_2014_analytic_file using a system path dependent on the host
-operating system, after setting the relative file import path to the current
-directory, if using Windows;
+* load external file that generates analytic dataset cde_2014_analytic_file
+using a system path dependent on the host operating system, after setting the
+relative file import path to the current directory, if using Windows;
 %macro setup;
     %if
         &SYSSCP. = WIN
@@ -68,12 +67,9 @@ footnote3
 Note: This compares the column "Percent (%) Eligible Free (K-12)" from frpm1415
 to the column of the same name from frpm1516.
 
-Methodology: When combining frpm1415 with frpm1516 during data preparation,
-take the difference of values of "Percent (%) Eligible Free (K-12)" for each
-school and create a new variable called frpm_rate_change_2014_to_2015. Here,
-use proc sort to create a temporary sorted table in descending by
-frpm_rate_change_2014_to_2015 and then proc print to display the first five
-rows of the sorted dataset.
+Methodology: Proc print is used to display the first five rows of a dataset
+that was sorted by frpm_rate_change_2014_to_2015 in descending order in the
+data-prep file.
 ;
 
 proc print data=cde_2014_analytic_file_frpm_sort(obs=5);
@@ -109,10 +105,8 @@ footnote2
 Note: This compares the column "Percent (%) Eligible Free (K-12)" from frpm1415
 to the column PCTGE1500 from sat15.
 
-Methodology: Use proc means to compute 5-number summaries of "Percent (%)
-Eligible Free (K-12)" and PCTGE1500. Then use proc format to create formats
-that bin both columns with respect to the proc means output. Then use proc freq
-to create a cross-tab of the two variables with respect to the created formats.
+Methodology: Use proc freq to create a cross-tab of the two variables with
+respect to formats created in the data-prep file.
 ;
 
 proc freq data=cde_2014_analytic_file;
@@ -165,11 +159,8 @@ footnote3
 Note: This compares the column NUMTSTTAKR from sat15 to the column TOTAL from
 gradaf15.
 
-Methodology: When combining sat15 and gradaf15 during data preparation, take
-the difference between NUMTSTTAKR in sat15 and TOTAL in gradaf15 for each
-school and create a new variable called excess_sat_takers. Here, use proc sort
-to create a temporary sorted table in descending by excess_sat_takers and then
-proc print to display the first 10 rows of the sorted dataset.
+Methodology: Use proc print to display the first ten rows of of a dataset that
+was sorted by excess_sat_takers in descending order in the data-prep file.
 ;
 
 proc print data=cde_2014_analytic_sat_sort(obs=10);

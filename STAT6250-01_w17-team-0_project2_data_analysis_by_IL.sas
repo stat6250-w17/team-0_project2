@@ -143,6 +143,18 @@ title2
 "Rationale: This would help identify schools with significant gaps in preparation specific for California's two public university systems, suggesting where focused outreach on UC/CSU college-preparation might have the greatest impact."
 ;
 
+footnote1
+"All ten schools listed appear to have extremely large numbers of 12th-graders graduating who have completed the SAT but not the coursework needed to apply for the UC/CSU system"
+;
+
+footnote2
+"Given the magnitude of these numbers, further investigation should be performed to ensure no data errors are involved."
+;
+
+footnote3
+"However, assuming there are no data issues underlying this analysis, possible explanations for such large numbers of 12th-graders completing only the SAT include lack of access to UC/CSU-preparatory coursework, as well as lack of proper counseling for students early enough in high school to complete all necessary coursework."
+;
+
 *
 Note: This compares the column NUMTSTTAKR from sat15 to the column TOTAL from
 gradaf15.

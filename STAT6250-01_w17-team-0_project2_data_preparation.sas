@@ -238,101 +238,58 @@ proc sort
 run;
 
 
-* combine FRPM data vertically, combine composite key values into a primary key
-  key, and compute year-over-year (y-o-y) change in Percent_Eligible_FRPM_K12,
-  retaining all AY2014-15 fields and y-o-y Percent_Eligible_FRPM_K12 change;
-data frpm1415_raw_with_yoy_change;
-    retain
-        CDS_Code
-    ;
-    length
-        CDS_Code $14.
-    ;
-    set
-        frpm1516_raw_sorted(in=ay2015_data_row)
-        frpm1415_raw_sorted(in=ay2014_data_row)
-    ;
-    retain
-        Percent_Eligible_FRPM_K12_1516
-    ;
-    by
-        County_Code
-        District_Code
-        School_Code
-    ;
-    if
-        ay2015_data_row=1
-    then
-        do;
-            Percent_Eligible_FRPM_K12_1516 = Percent_Eligible_FRPM_K12;
-        end;
-    else if
-        ay2014_data_row=1
-        and
-        Percent_Eligible_FRPM_K12 > 0
-        and
-        substr(School_Code,1,6) ne "000000"
-    then
-        do;
-            CDS_Code = cats(County_Code,District_Code,School_Code);
-            frpm_rate_change_2014_to_2015 =
-                Percent_Eligible_FRPM_K12
-                -
-                Percent_Eligible_FRPM_K12_1516
-            ;
-            output;
-        end;
-run;
-
-
 * build analytic dataset from raw datasets with the least number of columns and
 minimal cleaning/transformation needed to address research questions in
 corresponding data-analysis files;
-data cde_2014_analytic_file;
-    retain
-        CDS_Code
-        School_Name
-        Percent_Eligible_FRPM_K12
-        frpm_rate_change_2014_to_2015
-        PCTGE1500
-        excess_sat_takers
+proc sql;
+    create table cde_2014_analytic_file as
+        select
+             cats(A.County_Code,A.District_Code,A.School_Code)
+             AS
+             CDS_Code
+            ,A.School_Name
+            ,A.Percent_Eligible_FRPM_K12
+            ,A.Percent_Eligible_FRPM_K12 - B.Percent_Eligible_FRPM_K12
+             AS
+             frpm_rate_change_2014_to_2015
+            ,input(D.PCTGE1500,best12.2)
+             AS
+             PCTGE1500
+            ,input(D.NUMTSTTAKR,best12.) - input(C.TOTAL,best12.)
+             AS
+             excess_sat_takers
+        from
+            frpm1415_raw_sorted as A
+            inner join
+            frpm1516_raw_sorted as B
+            on
+                cats(A.County_Code,A.District_Code,A.School_Code)
+                =
+                cats(B.County_Code,B.District_Code,B.School_Code)
+            inner join
+            gradaf15_raw_sorted as C
+            on
+                cats(A.County_Code,A.District_Code,A.School_Code)
+                =
+                strip(CDS_Code)
+            inner join
+            sat15_raw_sorted as D
+            on
+                cats(A.County_Code,A.District_Code,A.School_Code)
+                =
+                strip(CDS)
+        having
+            Percent_Eligible_FRPM_K12 > 0
+            and
+            substr(CDS_Code,8,6) ne "000000"
+            and
+            not(missing(CDS_Code))
+            and
+            not(missing(School_Name))
+        order by
+            CDS_Code
     ;
-    keep
-        CDS_Code
-        School_Name
-        Percent_Eligible_FRPM_K12
-        frpm_rate_change_2014_to_2015
-        PCTGE1500
-        excess_sat_takers
-    ;
-    merge
-        frpm1415_raw_with_yoy_change
-        gradaf15_raw
-        sat15_raw(rename=(CDS=CDS_Code PCTGE1500=PCTGE1500_character))
-    ;
-    by
-        CDS_Code
-    ;
-    if
-        not(missing(compress(PCTGE1500_character,'.','kd')))
-    then
-        do;
-            PCTGE1500 = input(PCTGE1500_character,best12.2);
-        end;
-    else
-        do;
-            call missing(PCTGE1500);
-        end;
-    excess_sat_takers = input(NUMTSTTAKR,best12.) - input(TOTAL,best12.);
-    if
-        not(missing(CDS_Code))
-        and
-        not(missing(School_Name))
-        and
-        not(missing(School_Name))
-    ;
-run;
-
+quit;
 
 * create copy of analytic file sorted by frpm_rate_change_2014_to_2015 for use
 in data analysis;

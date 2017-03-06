@@ -291,6 +291,18 @@ proc sql;
     ;
 quit;
 
+* check for, and isolate, duplicates in analytic file;
+data cde_2014_analytic_file_dups;
+    set cde_2014_analytic_file;
+    by CDS_Code;
+    if
+        first.CDS_Code*last.CDS_Code = 0
+    then
+        do;
+            output;
+        end;
+run;
+
 * create copy of analytic file sorted by frpm_rate_change_2014_to_2015 for use
 in data analysis;
 proc sort
